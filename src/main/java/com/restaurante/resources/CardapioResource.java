@@ -7,6 +7,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,6 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.restaurante.event.RecursoCriadoEvent;
 import com.restaurante.models.Cardapio;
 import com.restaurante.repository.CardapioRepository;
+import com.restaurante.repository.filter.CardapioFilter;
+import com.restaurante.repository.projection.ResumoCardapio;
 import com.restaurante.service.CardapioService;
 
 @RestController
@@ -37,10 +41,22 @@ public class CardapioResource {
 	@Autowired
 	private ApplicationEventPublisher publisher;
 	
-	@GetMapping()
-	public List<Cardapio> listar(){
-		return cr.findAll();
+	
+	
+	
+
+	
+	@GetMapping
+	public Page<Cardapio> pesquisar(CardapioFilter cardapioFilter, Pageable pageable){
+		return cr.filtrar(cardapioFilter, pageable);
+
 	}
+	
+	@GetMapping(params = "resumo")
+	public Page<ResumoCardapio> resumir(CardapioFilter cardapioFilter, Pageable pageable){
+		return cr.resumir(cardapioFilter, pageable);
+	}
+	
 	
 	@PostMapping()
 	public ResponseEntity<Cardapio> inserir(@Valid @RequestBody Cardapio c, HttpServletResponse response){
@@ -57,7 +73,6 @@ public class CardapioResource {
 		Cardapio cardapio = cr.findOne(codigo);
 		return (cardapio != null) ? ResponseEntity.ok(cardapio) : ResponseEntity.notFound().build();
 	}
-	
 
 	@PutMapping("/{codigo}")
 	public ResponseEntity<?> atualizarCardapio(@PathVariable Long codigo, @Valid @RequestBody Cardapio cardapio){

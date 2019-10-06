@@ -27,7 +27,6 @@ public class Cardapio {
 	private BigDecimal preco;
 
 	
-	
 	public Long getCodigo() {
 		return codigo;
 	}
