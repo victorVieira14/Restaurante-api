@@ -9,12 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.restaurante.event.RecursoCriadoEvent;
@@ -47,7 +49,6 @@ public class CardapioResource {
 
 		 publisher.publishEvent(new RecursoCriadoEvent(this, response, cardapioSalva.getCodigo()));
 			return ResponseEntity.status(HttpStatus.CREATED).body(cardapioSalva);
-			
 	
 	}
 	
@@ -58,15 +59,16 @@ public class CardapioResource {
 	}
 	
 
-	//======================================= atualizar ==========================================
-	
 	@PutMapping("/{codigo}")
-	public ResponseEntity<Cardapio> atualizarCardapio(@PathVariable Long codigo, @Valid @RequestBody Cardapio cardapio){
+	public ResponseEntity<?> atualizarCardapio(@PathVariable Long codigo, @Valid @RequestBody Cardapio cardapio){
 		Cardapio cardapioSalva = cardapioService.atualiza(codigo, cardapio);
 		return ResponseEntity.ok(cardapioSalva);
 	}
-	
 
-	//======================================= atualizar ==========================================
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@DeleteMapping("/{codigo}")
+	public void deletarLancamento(@PathVariable Long codigo){
+		cr.delete(codigo);
+	}
 	
 }

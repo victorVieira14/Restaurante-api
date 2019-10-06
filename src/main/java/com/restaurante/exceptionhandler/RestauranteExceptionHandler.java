@@ -1,4 +1,4 @@
-package com.restaurante.exceptionhanndler;
+package com.restaurante.exceptionhandler;
 
 import java.util.ArrayList;
 import java.util.Arrays;
