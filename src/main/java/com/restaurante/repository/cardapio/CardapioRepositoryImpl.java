@@ -59,8 +59,7 @@ public class CardapioRepositoryImpl implements CardapioRepositoryQuery {
 		criteria.select(builder.construct(ResumoCardapio.class, 
 				root.get(Cardapio_.codigo), 
 				root.get(Cardapio_.nome),
-				root.get(Cardapio_.descricao),
-				root.get(Cardapio_.preco)));
+				root.get(Cardapio_.descricao)));
 			
 		
 		Predicate[] predicates = criarRestricoes(CardapioFilter, builder, root);

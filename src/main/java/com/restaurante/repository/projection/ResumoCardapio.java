@@ -1,22 +1,18 @@
 package com.restaurante.repository.projection;
 
-import java.math.BigDecimal;
-
 public class ResumoCardapio {
 
 
 	private Long codigo;
 	private String nome;
 	private String descricao;
-	private BigDecimal preco;
-	
-	
-	public ResumoCardapio(Long codigo, String nome, String descricao, BigDecimal preco) {
+
+	public ResumoCardapio(Long codigo, String nome, String descricao) {
 		super();
 		this.codigo = codigo;
 		this.nome = nome;
 		this.descricao = descricao;
-		this.preco = preco;
+
 	}
 
 
@@ -47,16 +43,6 @@ public class ResumoCardapio {
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
-	}
-
-
-	public BigDecimal getPreco() {
-		return preco;
-	}
-
-
-	public void setPreco(BigDecimal preco) {
-		this.preco = preco;
 	}
 	
 }
